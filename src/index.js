@@ -7,7 +7,7 @@ const app = express();
 var braintree = require('braintree');
 
 var gateway = braintree.connect({
-  environment: process.env.BT_ENVIRONMENT,
+  environment: braintree.Environment.Sandbox,
   merchantId: process.env.BT_MERCHANTID,
   publicKey: process.env.BT_PUBLICKEY,
   privateKey: process.env.BT_PRIVATEKEY,
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.get("/client_token", function (req, res) {
   gateway.clientToken.generate({}, function (err, response) {
-    res.send(response.clientToken);
+    res.send({client_token: response.clientToken});
   });
 });
 
